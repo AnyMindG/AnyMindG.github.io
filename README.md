@@ -1,0 +1,2 @@
+# AnyMindG.github.io
+Page
