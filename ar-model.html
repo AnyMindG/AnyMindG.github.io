@@ -44,6 +44,27 @@
     .fallback a:hover {
       background-color: #0056b3;
     }
+    .ar-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .btn {
+      background: #007aff;
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn:hover {
+      background: #005bb5;
+    }
+
   </style>
 </head>
 <body>
@@ -54,10 +75,8 @@
     <a id="arLink" rel="ar" href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz"></a>
 
     <!-- Fallback content for non-Safari browsers -->
-    <div class="fallback" id="fallback">
-      <img src="https://developer.apple.com/augmented-reality/quick-look/models/baseball-glove/baseball-glove-thumb_2x.png" alt="3D Baseball">
-      <br>
-      <a href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz">View in 3D</a>
+    <div class="ar-buttons">
+      <a href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz">AR</a>
     </div>
   </div>
 
