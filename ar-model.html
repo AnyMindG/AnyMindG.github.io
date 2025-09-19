@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AR Quick Look Auto Launch</title>
+  <title>AR Quick Look & WebAR</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -25,32 +26,12 @@
       color: #333;
       margin-bottom: 20px;
     }
-    .fallback img {
-      width: 300px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-    }
-    .fallback a {
-      display: inline-block;
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      color: #fff;
-      background-color: #007aff;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-    .fallback a:hover {
-      background-color: #0056b3;
-    }
     .ar-buttons {
       display: flex;
       gap: 10px;
       justify-content: center;
       margin-top: 20px;
     }
-
     .btn {
       background: #007aff;
       color: white;
@@ -64,35 +45,62 @@
     .btn:hover {
       background: #005bb5;
     }
-
+    model-viewer {
+      width: 300px;
+      height: 300px;
+      margin-top: 20px;
+      border-radius: 8px;
+      background-color: #eaeaea;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>View 3D Baseball</h2>
 
-    <!-- Hidden AR Quick Look link (used for auto-launch) -->
+    <!-- Hidden AR Quick Look link -->
     <a id="arLink" rel="ar" href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz"></a>
 
-    <!-- Fallback content for non-Safari browsers -->
-    <div class="ar-buttons">
-      <a href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz">AR</a>
+    <!-- Fallback buttons -->
+    <div class="ar-buttons" id="fallback">
+      <a class="btn" href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz">
+        AR (iOS)
+      </a>
+      <a class="btn" href="#" id="webARBtn">WebAR</a>
     </div>
+
+    <!-- Model Viewer for WebAR -->
+    <model-viewer id="webARViewer" src="https://anymindg.github.io/models/glove_baseball_mtl_variant.glb"
+                  ar ar-modes="webxr scene-viewer quick-look"
+                  camera-controls
+                  auto-rotate
+                  style="display:none;">
+    </model-viewer>
   </div>
 
   <script>
     window.onload = function () {
-      // Detect if user is on iOS Safari
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
       const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
       if (isIOS && isSafari) {
         // Auto-launch AR Quick Look
-        document.getElementById("arLink").click();
+        const arLink = document.getElementById("arLink");
+        if (arLink) arLink.click();
 
-        // Hide fallback UI (since Quick Look will handle it)
-        document.getElementById("fallback").style.display = "none";
+        // Hide fallback buttons
+        const fallback = document.getElementById("fallback");
+        if (fallback) fallback.style.display = "none";
       }
+
+      // WebAR button click
+      const webARBtn = document.getElementById("webARBtn");
+      const modelViewer = document.getElementById("webARViewer");
+      webARBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        modelViewer.style.display = "block";
+        modelViewer.showPoster = false;
+      });
     };
   </script>
 </body>
