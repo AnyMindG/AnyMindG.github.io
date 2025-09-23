@@ -32,51 +32,31 @@
       width: 300px;
       height: auto;
       border-radius: 8px;
-    }
-    .ar-overlay-btn {
-      position: absolute;
-      bottom: 20px; /* adjust vertical position */
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10; /* above the image */
-      background: #007aff;
-      color: white;
-      font-weight: bold;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-    }
-    .ar-overlay-btn:hover {
-      background: #005bb5;
+      cursor: pointer; /* Indicate to user that the image is clickable */
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>>Tap 3D models to view the object and place it in AR</h2>
+    <h2>Tap the 3D model preview to view the object and place it in AR</h2>
 
-    <!-- Preview image of the model -->
-    <img class="preview-image" src="https://developer.apple.com/augmented-reality/quick-look/models/baseball-glove/baseball-glove-thumb_2x.png" alt="3D Baseball Preview">
+    <!-- Preview image of the model (Clicking this will trigger AR Quick Look) -->
+    <img id="previewImage" class="preview-image" src="https://developer.apple.com/augmented-reality/quick-look/models/baseball-glove/baseball-glove-thumb_2x.png" alt="3D Baseball Preview">
 
     <!-- Hidden AR Quick Look link -->
-    <a id="arLink" rel="ar" href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz"></a>
-
-    <!-- AR button overlay -->
-    <button id="arBtn" class="ar-overlay-btn">Tap 3D models</button>
+    <a id="arLink" rel="ar" href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz" style="display: none;">Open in AR</a>
   </div>
 
   <script>
-    const arBtn = document.getElementById("arBtn");
+    const previewImage = document.getElementById("previewImage");
     const arLink = document.getElementById("arLink");
 
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-    arBtn.addEventListener("click", () => {
+    previewImage.addEventListener("click", () => {
       if (isIOS && isSafari) {
-        // Launch iOS Quick Look
+        // Launch iOS Quick Look when the image is clicked
         arLink.click();
       } else {
         alert("AR Quick Look works only on iOS Safari.");
