@@ -55,16 +55,17 @@
 </head>
 <body>
   <div class="container">
-    <h2>View 3D Baseball</h2>
+    <h2>Click to View 3D Baseball</h2>
 
     <!-- Preview image of the model -->
     <img class="preview-image" src="https://anymindg.github.io/models/glove_baseball_mtl_variant_preview.jpg" alt="3D Baseball Preview">
 
     <!-- Hidden AR Quick Look link -->
-    <a id="arLink" rel="ar" href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz"></a>
+    <a id="arLink" rel="ar" href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz" onmouseover="this.click();">View in AR</a>
+
 
     <!-- AR button overlay -->
-    <button id="arBtn" class="ar-overlay-btn">AR</button>
+    <!-- <button id="arBtn" class="ar-overlay-btn">AR</button> -->
   </div>
 
   <script>
