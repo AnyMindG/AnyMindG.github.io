@@ -38,27 +38,20 @@
 </head>
 <body>
   <div class="container">
-    <h2>--Tap the 3D model preview to view the object and place it in AR--</h2>
-<a rel="ar" href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz">
-  <img src="https://developer.apple.com/augmented-reality/quick-look/models/baseball-glove/baseball-glove-thumb_2x.png" width="300" alt="Baseball Glove">
-</a>
+    <h2>Tap the 3D model preview to view the object and place it in AR</h2>
+    <a id="arLink" rel="ar" href="https://anymindg.github.io/models/glove_baseball_mtl_variant.usdz">
+      <img src="https://developer.apple.com/augmented-reality/quick-look/models/baseball-glove/baseball-glove-thumb_2x.png" width="300" alt="Baseball Glove">
+    </a>
   </div>
 
   <script>
-    const previewImage = document.getElementById("previewImage");
-    const arLink = document.getElementById("arLink");
-
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-    previewImage.addEventListener("click", () => {
-      if (isIOS && isSafari) {
-        // Launch iOS Quick Look when the image is clicked
-        arLink.click();
-      } else {
-        alert("AR Quick Look works only on iOS Safari.");
-      }
-    });
+    // Wait for the page to load and then simulate the click event
+    window.onload = function() {
+      const arLink = document.getElementById('arLink');
+      
+      // Simulate a click after the page is loaded
+      arLink.click();
+    };
   </script>
 </body>
 </html>
