@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
     <head>
         <script type="text/javascript">
@@ -13,4 +13,40 @@
    <script src="AnyManagerGameScript" charset="UTF-8"></script>
        </div>
     </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        // Your app's Universal Link
+        const universalLink = 'https://anymindg.github.io/deep-link/profile';  // Example link
+        // App Store URL (change to your app's App Store link)
+        const appStoreURL = 'https://apps.apple.com/app/511154461';
+        
+        function openApp() {
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = universalLink;  // Attempt to open the Universal Link
+            document.body.appendChild(iframe);
+            
+            // If the app doesn't open within 2 seconds, redirect to the App Store
+            setTimeout(() => {
+                window.location.href = appStoreURL;
+            }, 2000);  // Adjust the timeout if needed
+        }
+
+        // Trigger the app opening when the page loads
+        window.onload = openApp;
+    </script>
+</head>
+<body>
+    <h1>Redirecting to the App...</h1>
+    <p>If the app is not installed, you will be redirected to the App Store.</p>
+</body>
 </html>
+
+
