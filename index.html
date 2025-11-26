@@ -23,7 +23,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deep Link Fallback</title>
     <script>
-        // Simple routing logic
         document.addEventListener('DOMContentLoaded', function() {
             const path = window.location.pathname;
 
@@ -54,18 +53,47 @@
 
             // Try to match the current path
             const matchedPage = matchRoute(path);
-            
+
             if (matchedPage) {
                 // If matched, display content related to the path
                 document.body.innerHTML = `<h1>${matchedPage}</h1>`;
             } else {
-                // If no match found, display fallback content or redirect
-                document.body.innerHTML = `<h1>Page Not Found</h1><p>Redirecting to fallback...</p>`;
-                setTimeout(() => {
-                    window.location.replace("/fallback.html");
-                }, 2000); // Redirect to fallback after 2 seconds
+                // If no match found, handle the fallback behavior
+                handleFallback();
             }
         });
+
+        // Fallback logic if no route is matched
+        function handleFallback() {
+            // Get the current URL (this will be the Universal Link path)
+            const universalLink = window.location.href;  // e.g., "https://anymindg.github.io/deep-link/home"
+            
+            // App Store URL (change to your app's App Store page URL)
+            const appStoreURL = 'https://apps.apple.com/us/app/deep-link-demo/id123456789'; 
+            
+            // Show a message that we're redirecting
+            document.body.innerHTML = `
+                <h1>Redirecting...</h1>
+                <p>If the app doesn't open, you'll be redirected to the App Store.</p>
+            `;
+
+            // Try to open the app using the Universal Link
+            tryOpenApp(universalLink, appStoreURL);
+        }
+
+        // Try to open the app using an iframe and redirect to the App Store if it fails
+        function tryOpenApp(universalLink, appStoreURL) {
+            // Create an invisible iframe to try to open the Universal Link
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = universalLink;
+            document.body.appendChild(iframe);
+
+            // If the app doesn't open within a set time, redirect to the App Store
+            setTimeout(() => {
+                window.location.href = appStoreURL;  // Redirect to App Store if the app isn't installed
+            }, 2000); // Redirect after 2 seconds
+        }
     </script>
 </head>
 <body>
@@ -73,3 +101,4 @@
     <p>If you see this page, your route didn't match our deep link setup.</p>
 </body>
 </html>
+
