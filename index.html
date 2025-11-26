@@ -23,40 +23,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deep Link Fallback</title>
     <script>
-        // JavaScript to handle fallback for deep links
+        // Simple routing logic
         document.addEventListener('DOMContentLoaded', function() {
             const path = window.location.pathname;
-            const deepLinkPaths = [
-                "/profile",
-                "/profile/*",
-                "/deep-link/*",
-                "/articles/*"
-            ];
 
-            function isValidDeepLink(path) {
-                for (let route of deepLinkPaths) {
-                    if (route.includes("*")) {
-                        const basePath = route.replace("*", "");
-                        if (path.startsWith(basePath)) {
-                            return true;
-                        }
-                    } else if (path === route) {
-                        return true;
+            // Define the routes (can match anything like /profile, /deep-link/*, etc.)
+            const routes = {
+                '/profile': 'Profile Page',
+                '/profile/*': 'Profile Detail Page',
+                '/deep-link/*': 'Deep Link Page',
+                '/articles/*': 'Article Page'
+            };
+
+            // Function to match the path to a route
+            function matchRoute(path) {
+                // Check if path matches any of the defined routes
+                if (routes[path]) {
+                    return routes[path];
+                }
+
+                // Check wildcard routes like /profile/*
+                for (let route in routes) {
+                    if (route.includes("*") && path.startsWith(route.replace("*", ""))) {
+                        return routes[route];
                     }
                 }
-                return false;
+
+                return null;
             }
 
-            if (!isValidDeepLink(path)) {
-                window.location.replace("/fallback.html");
+            // Try to match the current path
+            const matchedPage = matchRoute(path);
+            
+            if (matchedPage) {
+                // If matched, display content related to the path
+                document.body.innerHTML = `<h1>${matchedPage}</h1>`;
+            } else {
+                // If no match found, display fallback content or redirect
+                document.body.innerHTML = `<h1>Page Not Found</h1><p>Redirecting to fallback...</p>`;
+                setTimeout(() => {
+                    window.location.replace("/fallback.html");
+                }, 2000); // Redirect to fallback after 2 seconds
             }
         });
     </script>
 </head>
 <body>
-    <h1>Welcome to Deep Link Handler</h1>
-    <p>If you're seeing this page, it means the app isn't installed or the link wasn't recognized. Redirecting...</p>
+    <h1>Welcome to the Deep Link Fallback</h1>
+    <p>If you see this page, your route didn't match our deep link setup.</p>
 </body>
 </html>
-
-
