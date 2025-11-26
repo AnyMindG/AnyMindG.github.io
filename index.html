@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
     <head>
         <script type="text/javascript">
@@ -13,5 +13,50 @@
    <script src="AnyManagerGameScript" charset="UTF-8"></script>
        </div>
     </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Link Fallback</title>
+    <script>
+        // JavaScript to handle fallback for deep links
+        document.addEventListener('DOMContentLoaded', function() {
+            const path = window.location.pathname;
+            const deepLinkPaths = [
+                "/profile",
+                "/profile/*",
+                "/deep-link/*",
+                "/articles/*"
+            ];
+
+            function isValidDeepLink(path) {
+                for (let route of deepLinkPaths) {
+                    if (route.includes("*")) {
+                        const basePath = route.replace("*", "");
+                        if (path.startsWith(basePath)) {
+                            return true;
+                        }
+                    } else if (path === route) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            if (!isValidDeepLink(path)) {
+                window.location.replace("/fallback.html");
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Welcome to Deep Link Handler</h1>
+    <p>If you're seeing this page, it means the app isn't installed or the link wasn't recognized. Redirecting...</p>
+</body>
 </html>
+
 
